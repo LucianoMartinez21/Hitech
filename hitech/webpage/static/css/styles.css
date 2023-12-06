@@ -534,3 +534,8 @@ img {
 {
   background-color: #000;
 }
+
+#panorama {
+  width: 100%; /* O cualquier otro valor que desees */
+  height: 500px; /* O cualquier otro valor que desees */
+}

@@ -24,7 +24,9 @@
             <!-- Navigation -->
             <nav class="nav-main">
             <!-- Brand -->
-            <img src="img/logo2.png" alt="Hitech Logo" class="nav-brand">
+            <a href="index.html">
+                <img src="img/logo2.png" alt="Hitech Logo" class="nav-brand">
+            </a>
             <!-- Left Nav -->
             <ul class="nav-menu">
                 <li>
@@ -68,8 +70,16 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="username">Nombre de usuario:</label>
-                                    <input type="text" class="form-control" id="username" placeholder="Ingrese su nombre de usuario" required>
+                                    <label for="name">Nombre:</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Ingrese su nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastfathername">Apellido Paterno:</label>
+                                    <input type="text" class="form-control" id="lastfathername" placeholder="Ingrese su Apellido Paterno" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastmothername">Apellido Materno:</label>
+                                    <input type="text" class="form-control" id="lastmothername" placeholder="Ingrese su Apellido Materno" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Correo electrónico:</label>
@@ -80,8 +90,16 @@
                                     <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirmPassword">Confirmar Contraseña:</label>
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirme su contraseña" required>
+                                    <label for="gender">Genero:</label>
+                                    <select class="form-control" id="gender" required>
+                                        <option value="male">Masculino</option>
+                                        <option value="female">Femenino</option>
+                                        <option value="other">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Edad:</label>
+                                    <input type="number" class="form-control" id="age" placeholder="Ingrese su edad" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
                             </form>
