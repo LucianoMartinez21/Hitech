@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hitech</title>
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <div class="menu-btn">
+        <i class="fas fa-bars fa-2x"></i>
+    </div>
+
+
+    <!-- Encabezado -->
+    <div class="container mt-5">
+        <!-- Navigation -->
+        <nav class="nav-main">
+        <!-- Brand -->
+        <a href="{% url 'index' %}">
+            <img src="/static/img/logo2.png" alt="Hitech Logo" class="nav-brand">
+        </a>
+        <!-- Left Nav -->
+        <ul class="nav-menu">
+            <li>
+            <a href="#">Modelos</a>
+            </li>
+            <li>
+            <a href="#">Sobre Nosotros</a>
+            </li>
+        </ul>
+
+        <!-- Right Nav -->
+        <ul class="nav-menu-right">
+            <li>
+            <div class="mt-2">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+            </div>
+            </li>
+            <li>
+            <div class="mt-2">
+                <a href="{% url 'signup' %}" class="btn btn-secondary btn-lg">Crear Cuenta</a>
+            </div>
+            </li>
+            <!--<li>
+            <a href="#">
+                <i class="fas fa-search"></i>
+            </a>
+            </li>-->
+        </ul>
+        </nav>
+        <hr>
+    </div>
+    <!--Aqui se agrega el contenido de la pagina en especifico-->
+    {% block content %}
+    {% endblock %}
+    <!-- Redes Sociales -->
+    <div>
+        <section class="social mt-5s">
+            <p>Síguenos en Redes Sociales</p>
+            <div class="links">
+                <a href="https://facebook.com" class="btn btn-primary">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com" class="btn btn-info">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com" class="btn btn-danger">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </section>
+    </div>
+    <!-- Pie de Página -->
+    <footer class="footer">
+        <div class="container">
+        <h3>Derechos de Autor © Hitech</h3>
+        </div>
+    </footer>
+    <!-- Bootstrap y Scroll Reveal -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

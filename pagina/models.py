@@ -1,5 +1,5 @@
 from django.db import models
-
+'''
 # Create your models here.
 class Tabla_test(models.Model):
     columna_uno = models.CharField(max_length=200)
@@ -52,3 +52,4 @@ class Registro(models.Model):
     fecha_registro= models.DateTimeField()
     registro_delete= models.DateTimeField()
 
+'''
