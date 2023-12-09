@@ -1,5 +1,5 @@
 from django.db import models
-'''
+
 # Create your models here.
 class Tabla_test(models.Model):
     columna_uno = models.CharField(max_length=200)
@@ -25,18 +25,19 @@ class Autos(models.Model):
 
 class Fotos(models.Model):
     path_foto = models.FilePathField()
-    auto_id= models.ForeignKey(Autos, on_delete=models.CASCADE)
+    auto_id= models.ForeignKey(Autos, on_delete=models.DO_NOTHING)
 
 class Usuarios (models.Model):
     nombre = models.CharField(max_length=60)
     edad = models.IntegerField()
     sexo = models.IntegerField()
-    email = models.CharField(max_length=60) 
+    email = models.EmailField()
+    administrador= models.BooleanField(default=False)
     usuario_delete = models.DateTimeField(null=True)
 
 class Contraseñas(models.Model):
     contra= models.CharField(max_length=600)
-    contra_delete= models.DateTimeField()
+    contra_delete= models.DateTimeField(null=True)
     usuario_id= models.ForeignKey(Usuarios, on_delete=models.CASCADE)
 
 class Notificaciones(models.Model):
@@ -44,12 +45,9 @@ class Notificaciones(models.Model):
     auto_notificacion_id = models.ForeignKey(Autos,on_delete=models.CASCADE)
     fecha_inicio =models.DateTimeField()
     fecha_final = models.DateTimeField()
-    notificaciones_delete = models.DateTimeField()
 
-class Registro(models.Model):
-    usuario_registro_id=models.ForeignKey(Usuarios,null=True)
-    auto_registro_id= models.ForeignKey(Autos, on_delete=models.CASCADE)
+class Registros_visitas(models.Model):
+    usuario_registro_id=models.ForeignKey(Usuarios,null=True , on_delete=models.DO_NOTHING)
+    auto_registro_id= models.ForeignKey(Autos, on_delete=models.DO_NOTHING)
     fecha_registro= models.DateTimeField()
-    registro_delete= models.DateTimeField()
-
-'''
+    registro_delete= models.DateTimeField(null=True)
