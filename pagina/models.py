@@ -30,8 +30,13 @@ class Fotos(models.Model):
 class Usuarios (models.Model):
     nombre = models.CharField(max_length=60)
     edad = models.IntegerField()
-    sexo = models.IntegerField()
-    email = models.EmailField()
+    opciones_sexo = (
+        (1, 'Masculino'),
+        (2, 'Femenino'),
+        (3, 'Otro'),
+    )
+    sexo = models.IntegerField(choices=opciones_sexo)
+    email = models.EmailField(max_length=255, unique=True)
     administrador= models.BooleanField(default=False)
     usuario_delete = models.DateTimeField(null=True)
 
