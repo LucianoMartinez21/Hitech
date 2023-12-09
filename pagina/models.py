@@ -31,7 +31,7 @@ class Usuarios (models.Model):
     nombre = models.CharField(max_length=60)
     edad = models.IntegerField()
     sexo = models.IntegerField()
-    email = models.CharField(max_length=60) 
+    email = models.CharField(max_length=60)
     usuario_delete = models.DateTimeField(null=True)
 
 class Contraseñas(models.Model):
