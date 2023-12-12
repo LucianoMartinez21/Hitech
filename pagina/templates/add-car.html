@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="body-login">
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        Añadir auto
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="marca">Marca</label>
+                                <input type="text" class="form-control" id="marca" placeholder="Ingrese marca del auto" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="modelo">Modelo</label>
+                                <input type="text" class="form-control" id="modelo" placeholder="Ingrese el modelo del auto" required>
+                            </div>
+                            <!--
+                            <div class="form-group">
+                                <label for="yearDropdown" class="form-label">Select Year:</label>
+                                <select class="form-select" id="yearDropdown">
+                                    <option selected disabled>Select a year</option>
+                                </select>
+                            </div>
+                            -->
+                            <div class="form-group">
+                                <label for="precio">Precio</label>
+                                <input type="number" class="form-control" id="precio" placeholder="Ingrese el precio del auto" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="combustible">Tipo de combustible</label>
+                                <select class="form-control" id="combustible" required>
+                                    <option selected disabled>Seleccione el tipo de combustible</option>
+                                    <option value="1">93</option>
+                                    <option value="2">95</option>
+                                    <option value="3">97</option>
+                                    <option value="4">Petrolero</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="motor">Tipo de motor</label>
+                                <select class="form-control" id="motor" required>
+                                    <option selected disabled>Seleccione el tipo de motor</option>
+                                    <option value='1'>Tipo V</option>
+                                    <option value='2'>Tipo W</option>
+                                    <option value='3'>Cilindro opuesto</option>
+                                    <option value='4'>Electrico</option>
+                                </select>
+                            </div>
+                            <div class="form-check">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="transmision">
+                                    <label class="form-check-label" for="transmision">¿Transmision manual?</label>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="cambiovolante">
+                                    <label class="form-check-label" for="cambiovolante">¿Cambio de volante?</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="color">Color del auto</label>
+                                <select class="form-control" id="color" required>
+                                    <option selected disabled>Seleccione el color del auto</option>
+                                    <option value='1'>Rojo</option>
+                                    <option value='2'>Azul</option>
+                                    <option value='3'>Verde</option>
+                                    <option value='4'>Rosa</option>
+                                    <option value='5'>Blanco</option>
+                                    <option value='6'>Negro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipoauto">Tipo de auto</label>
+                                <select class="form-control" id="tipoauto" required>
+                                    <option selected disabled>Seleccione el tipo del auto</option>
+                                    <option value='1'>Sedan</option>
+                                    <option value='2'>SUV</option>
+                                    <option value='3'>Deportivo</option>
+                                    <option value='4'>Hibrido</option>
+                                    <option value='5'>Electrico</option>
+                                    <option value='6'>Camion</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="asiento">Numero de asientos</label>
+                                <input type="number" class="form-control" id="asiento" placeholder="Ingrese el numero de asientos" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Description del auto (maximo 400 caracteres)</label>
+                                <textarea class="form-control" id="descripcion" rows="4" maxlength="400" placeholder="Ingrese su descripcion aqui..."></textarea>
+                                <!--<small class="form-text text-muted">Characters remaining: <span id="charCount">400</span></small>-->
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFileMultiple" class="form-label">Ingrese imagen(es) de los autos</label>
+                                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Ingrese imagen 360 (vista frontal)</label>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Ingrese imagen 360 (vista trasera)</label>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Añadir auto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
