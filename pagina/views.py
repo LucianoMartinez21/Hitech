@@ -47,8 +47,12 @@ def Login(request):
             user = authenticate(resquest, email=email, password=password)
             if user is not None:
                 login(resquest, user)
-
-                return redirect('index')
+                if user.administrador:
+                    return redirect('admin-site.html') #placeholder para la pagina donde se ingresara datos y obtendra estadisticas
+                else:
+                    return redirect('index')
+    else:
+        form = LoginForm()
     return render(resquest, 'login.html')'''
 
 def signup(resquest):
