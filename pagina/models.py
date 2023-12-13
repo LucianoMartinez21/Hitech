@@ -19,14 +19,14 @@ class Autos(models.Model):
         ('3', '97'),
         ('4', 'Petrolero'),
     )
-    tipo_gasolina = models.CharField(choices=opciones_combusitble,  null=True)
+    tipo_gasolina = models.CharField(max_length=1, choices=opciones_combusitble,  null=True)
     opciones_motor = (
         ('1', 'Tipo V'),
         ('2', 'Tipo W'),
         ('3', 'Cilindro opuesto'),
         ('4', 'Electrico'),
     )
-    motor =models.CharField(choices=opciones_motor, null=True)
+    motor =models.CharField(max_length=1, choices=opciones_motor, null=True)
     transmision= models.BooleanField(null=True)
     opciones_color = (
         ('1', 'Rojo'),
@@ -36,7 +36,7 @@ class Autos(models.Model):
         ('5', 'Blanco'),
         ('6', 'Negro'),
     )
-    color = models.CharField(choices=opciones_color, null=True)
+    color = models.CharField(max_length=1, choices=opciones_color, null=True)
     cambio_volante = models.BooleanField(null=True)
 
     opciones_auto = (
@@ -47,7 +47,7 @@ class Autos(models.Model):
         ('5', 'Electrico'),
         ('6', 'Camion'),
     )
-    tipo_auto = models.CharField(choices=opciones_auto, null=True)
+    tipo_auto = models.CharField(max_length=1, choices=opciones_auto, null=True)
     numero_asientos = models.IntegerField(null=True)
     descripcion = models.TextField(max_length=400, null=True)
     auto_delete = models.DateTimeField(null=True)

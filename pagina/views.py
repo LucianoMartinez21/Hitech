@@ -87,26 +87,4 @@ def signup(resquest):
         return redirect('index')
 
 def pruebas(request):
-    if request.method == 'POST':
-        form = Login_Form(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-
-            # Verificar si el email y la contraseña coinciden en las tablas Usuarios y Contraseñas
-            try:
-                usuario = Usuarios.objects.get(email=email)
-                contrasena = Contraseñas.objects.get(usuario_id=usuario.id, contra=password)
-
-                # Si la consulta tiene éxito, los datos son correctos
-                # Puedes realizar otras acciones, como iniciar sesión, redireccionar, etc.
-                return redirect('index')
-
-            except (Usuarios.DoesNotExist, Contraseñas.DoesNotExist):
-                # Si no se encuentra el usuario o la contraseña no coincide, puedes mostrar un mensaje de error
-                form.add_error(None, "Email o contraseña incorrectos")
-
-    else:
-        form = Login_Form()
-
-    return render(request, 'pruebas.html', {'form': form})
+    return render(request, 'add-car.html')
