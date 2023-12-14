@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-#from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from .forms import Login_Form, Signup_form, Contrasena_form
 from .models import Usuarios, Contraseñas
 # Create your views here.
@@ -14,7 +14,7 @@ def index(resquest):
 def detalles_auto(resquest):
     return render(resquest, 'detailcar.html')
 
-def Login(request):
+def Login2(request):
     if request.method == 'POST':
         form = Login_Form(request.POST)
         if form.is_valid():
@@ -79,11 +79,10 @@ def signup(resquest):
         # Si el usuario no existe, procedemos a crearlo
         usuario = Usuarios.objects.create(nombre=resquest.POST['nombre'],edad=resquest.POST['edad'],sexo=resquest.POST['sexo'],email=resquest.POST['email'])
 
-        contra = Contraseñas.objects.create(contra=resquest.POST['contrasena'],suario_id=usuario)
+        contra = Contraseñas.objects.create(contra=resquest.POST['contrasena'],usuario_id=usuario)
 
         usuario.save()
         contra.save()
-
         return redirect('index')
 
 def pruebas(request):
