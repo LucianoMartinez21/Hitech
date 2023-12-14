@@ -6,36 +6,36 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Autos
 # Create your views here.
 
-def index(resquest):
-    return render(resquest,'index.html')
+def index(request):
+    return render(request,'index.html')
 
-def detalles_auto(resquest):
-    return render(resquest, 'detailcar.html')
+def detalles_auto(request):
+    return render(request, 'detailcar.html')
 
-def Login(resquest):
-    if resquest.method == 'POST':
-        form = LoginForm(resquest.POST)
+def Login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(resquest, email=email, password=password)
+            user = authenticate(request, email=email, password=password)
             if user is not None:
-                login(resquest, user)
+                login(request, user)
                 if user.administrador:
                     return redirect('admin-site.html') #placeholder para la pagina donde se ingresara datos y obtendra estadisticas
                 else:
                     return redirect('index')
     else:
         form = LoginForm()
-    return render(resquest, 'login.html')
+    return render(request, 'login.html')
 
-def signup(resquest):
-    return render(resquest, 'signup.html')
+def signup(request):
+    return render(request, 'signup.html')
 
 
-def car_list(resquest):
+def car_list(request):
     cars_list = Autos.objects.all()
-    page = resquest.GET.get('page', 1)
+    page = request.GET.get('page', 1)
     paginator = Paginator(cars_list, 10) #Muestra 10 autos por pagina
 
     try:
@@ -45,4 +45,4 @@ def car_list(resquest):
     except EmptyPage:
         cars = paginator.page(paginator.num_pages)
 
-    return render(request, 'index', {''})
+    return render(request, 'car_list.html', {'cars': cars})
