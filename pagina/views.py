@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Autos
 # Create your views here.
 
 def index(resquest):
@@ -29,3 +31,18 @@ def Login(resquest):
 
 def signup(resquest):
     return render(resquest, 'signup.html')
+
+
+def car_list(resquest):
+    cars_list = Autos.objects.all()
+    page = resquest.GET.get('page', 1)
+    paginator = Paginator(cars_list, 10) #Muestra 10 autos por pagina
+
+    try:
+        cars = paginator.page(page)
+    except PageNotAnInteger:
+        cars = paginator.page(1) # si la pagina no es un entero, entrega la primera pagina
+    except EmptyPage:
+        cars = paginator.page(paginator.num_pages)
+
+    return render(request, 'index', {''})
