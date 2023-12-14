@@ -3,16 +3,18 @@ from django.http import HttpResponse
 from django.contrib.auth import login
 from .forms import Login_Form, Signup_form, Contrasena_form
 from .models import Usuarios, Contraseñas
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Autos
 # Create your views here.
 
-def pruebas(resquest):
-    return render(resquest,'pruebas.html')
+def pruebas(request):
+    return render(request,'pruebas.html')
 
-def index(resquest):
-    return render(resquest,'index.html')
+def index(request):
+    return render(request,'index.html')
 
-def detalles_auto(resquest):
-    return render(resquest, 'detailcar.html')
+def detalles_auto(request):
+    return render(request, 'detailcar.html')
 
 def Login2(request):
     if request.method == 'POST':
@@ -44,9 +46,9 @@ def Login2(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(resquest, email=email, password=password)
+            user = authenticate(request, email=email, password=password)
             if user is not None:
-                login(resquest, user)
+                login(request, user)
                 if user.administrador:
                     return redirect('admin-site.html') #placeholder para la pagina donde se ingresara datos y obtendra estadisticas
                 else:
@@ -55,31 +57,31 @@ def Login2(request):
         form = LoginForm()
     return render(resquest, 'login.html')'''
 
-def signup(resquest):
-    if resquest.method == 'GET':
-        return render(resquest, 'signup.html', {
+def signup(request):
+    if request.method == 'GET':
+        return render(request, 'signup.html', {
             'form' : Signup_form(),
             'form2' : Contrasena_form()
         })
-    
+
     else:
-        email = resquest.POST['email']
-        
+        email = request.POST['email']
+
         # Verificar si el usuario ya existe
         if Usuarios.objects.filter(email=email).exists():
             # El usuario ya existe, puedes manejar esto según tus necesidades
             # Puedes mostrar un mensaje de error o redirigir a otra página
             # Aquí simplemente redirigimos a la misma página con un mensaje de error
-            return render(resquest, 'signup.html', {
+            return render(request, 'signup.html', {
                 'form': Signup_form(),
                 'form2': Contrasena_form(),
                 'error_message': 'Este correo electrónico ya está registrado.'
             })
 
         # Si el usuario no existe, procedemos a crearlo
-        usuario = Usuarios.objects.create(nombre=resquest.POST['nombre'],edad=resquest.POST['edad'],sexo=resquest.POST['sexo'],email=resquest.POST['email'])
+        usuario = Usuarios.objects.create(nombre=request.POST['nombre'],edad=request.POST['edad'],sexo=request.POST['sexo'],email=request.POST['email'])
 
-        contra = Contraseñas.objects.create(contra=resquest.POST['contrasena'],usuario_id=usuario)
+        contra = Contraseñas.objects.create(contra=request.POST['contrasena'],usuario_id=usuario)
 
         usuario.save()
         contra.save()
@@ -87,3 +89,18 @@ def signup(resquest):
 
 def pruebas(request):
     return render(request, 'add-car.html')
+
+
+def car_list(request):
+    cars_list = Autos.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(cars_list, 10) #Muestra 10 autos por pagina
+
+    try:
+        cars = paginator.page(page)
+    except PageNotAnInteger:
+        cars = paginator.page(1) # si la pagina no es un entero, entrega la primera pagina
+    except EmptyPage:
+        cars = paginator.page(paginator.num_pages)
+
+    return render(request, 'car_list.html', {'cars': cars})
