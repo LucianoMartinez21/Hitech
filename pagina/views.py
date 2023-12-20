@@ -13,6 +13,9 @@ def pruebas(request):
 def index(request):
     return render(request,'index.html')
 
+def addauto(request):
+    return render(request, 'add-car.html')
+
 def detalles_auto(request, auto_id):
     auto = Autos.objects.get(pk=auto_id)
     return render(request, 'detailcar.html', {'auto' : auto})
@@ -86,7 +89,7 @@ def signup(request):
 
         usuario.save()
         contra.save()
-        login(request, usuario)
+        #login(request, usuario)
         return redirect('index')
 
 def pruebas(request):

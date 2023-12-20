@@ -69,6 +69,9 @@ class Usuarios (models.Model):
     administrador= models.BooleanField(default=False)
     usuario_delete = models.DateTimeField(null=True)
 
+    def IsAdmin(self):
+        return self.administrador
+
 class Contraseñas(models.Model):
     contra= models.CharField(max_length=600)
     contra_delete= models.DateTimeField(null=True)

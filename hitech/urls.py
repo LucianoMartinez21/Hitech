@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pagina.views import index, Login2, detalles_auto, pruebas, signup
+from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('login/', Login2, name='login'),
     path('signup/', signup,name='signup'),
-    path('prueba/', pruebas,name='prueba'),
-    path('auto/<int:auto_id>', detalles_auto, name='detail')
+    path('prueba/', pruebas, name='prueba'),
+    path('auto/<int:auto_id>', detalles_auto, name='detail'),
+    path('addcar/', addauto, name='addcar')
 ]
