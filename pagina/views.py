@@ -85,6 +85,7 @@ def signup(request):
 
         usuario.save()
         contra.save()
+        login(request, usuario)
         return redirect('index')
 
 def pruebas(request):
