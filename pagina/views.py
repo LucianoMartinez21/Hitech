@@ -5,6 +5,7 @@ from .forms import Login_Form, Signup_form, Contrasena_form
 from .models import Usuarios, Contraseñas
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Autos
+from django.contrib.auth.models import AbstractUser
 # Create your views here.
 
 def pruebas(request):
@@ -83,7 +84,7 @@ def signup(request):
             })
 
         # Si el usuario no existe, procedemos a crearlo
-        usuario = Usuarios.objects.create(nombre=request.POST['nombre'],edad=request.POST['edad'],sexo=request.POST['sexo'],email=request.POST['email'])
+        usuario = Usuarios.objects.create(nombre=request.POST['nombre'],edad=request.POST['edad'],sexo=request.POST['sexo'],email=request.POST['email'], username = request.POST['nombre'])
 
         contra = Contraseñas.objects.create(contra=request.POST['contrasena'],usuario_id=usuario)
 

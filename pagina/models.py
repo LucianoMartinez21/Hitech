@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 # Create your models here.
 class Tabla_test(models.Model):
@@ -56,7 +57,7 @@ class Fotos(models.Model):
     path_foto = models.FilePathField()
     auto_id= models.ForeignKey(Autos, on_delete=models.DO_NOTHING)
 
-class Usuarios (models.Model):
+class Usuarios (AbstractUser):
     nombre = models.CharField(max_length=60)
     edad = models.IntegerField()
     opciones_sexo = (
@@ -71,6 +72,9 @@ class Usuarios (models.Model):
 
     def IsAdmin(self):
         return self.administrador
+    
+    groups = models.ManyToManyField(Group, related_name='usuarios')
+    user_permissions = models.ManyToManyField(Permission, related_name='usuarios')
 
 class Contraseñas(models.Model):
     contra= models.CharField(max_length=600)
