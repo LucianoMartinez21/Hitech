@@ -35,6 +35,7 @@ def Login2(request):
 
                 # Si la consulta tiene éxito, los datos son correctos
                 # Puedes realizar otras acciones, como iniciar sesión, redireccionar, etc.
+                login(request, usuario)
                 return redirect('index')
 
             except (Usuarios.DoesNotExist, Contraseñas.DoesNotExist):
@@ -45,22 +46,6 @@ def Login2(request):
         form = Login_Form()
 
     return render(request, 'login.html', {'form': form})
-
-    '''if resquest.method == 'POST':
-        form = LoginForm(resquest.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                if user.administrador:
-                    return redirect('admin-site.html') #placeholder para la pagina donde se ingresara datos y obtendra estadisticas
-                else:
-                    return redirect('index')
-    else:
-        form = LoginForm()
-    return render(resquest, 'login.html')'''
 
 def signup(request):
     if request.method == 'GET':
