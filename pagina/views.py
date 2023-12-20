@@ -13,8 +13,9 @@ def pruebas(request):
 def index(request):
     return render(request,'index.html')
 
-def detalles_auto(request):
-    return render(request, 'detailcar.html')
+def detalles_auto(request, auto_id):
+    auto = Autos.objects.get(pk=auto_id)
+    return render(request, 'detailcar.html', {'auto' : auto})
 
 def Login2(request):
     if request.method == 'POST':
@@ -90,8 +91,7 @@ def signup(request):
 
 def pruebas(request):
     return render(request, 'add-car.html')
-
-
+'''
 def car_list(request):
     cars_list = Autos.objects.all()
     page = request.GET.get('page', 1)
@@ -104,4 +104,5 @@ def car_list(request):
     except EmptyPage:
         cars = paginator.page(paginator.num_pages)
 
-    return render(request, 'car_list.html', {'cars': cars})
+    return render(request, 'index.html', {'cars': cars})
+'''

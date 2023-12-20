@@ -9,6 +9,7 @@ class Tabla_test(models.Model):
     numeros = models.IntegerField(default=0)
 
 class Autos(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
     marca = models.CharField(max_length=20)
     modelo = models.CharField(max_length=20)
     ano = models.IntegerField()

@@ -24,4 +24,5 @@ urlpatterns = [
     path('login/', Login2, name='login'),
     path('signup/', signup,name='signup'),
     path('prueba/', pruebas,name='prueba'),
+    path('auto/<int:auto_id>', detalles_auto, name='detail')
 ]

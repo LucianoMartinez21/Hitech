@@ -48,7 +48,6 @@
       </div>
 
       <!-- Sección de Autos -->
-      <!--
       <div class="col-md-9">
         <div class="row">
           <div class="col-md-4 mb-4">
@@ -71,9 +70,9 @@
               </div>
             </div>
           </div>
-          <!-- Agrega más autos según sea necesario ->
+          <!-- Agrega más autos según sea necesario-->
         </div>
-      </div>-->
+      </div>
       {% for car in cars %}
       <div class="col-md-4 mb-4">
         <a href="{%url 'car_detail' car.id %}">
@@ -83,6 +82,7 @@
           </div>
         </a>
       </div>
+      {% endfor %}
     </div>
   </div>
 </div>
