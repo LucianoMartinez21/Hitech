@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import login
-from .forms import Login_Form, Signup_form, Contrasena_form
-from .models import Usuarios, Contraseñas
+from django.contrib.auth import authenticate, login
+from .forms import Login_Form, Signup_form, Contrasena_form, AutosForm, FotosForm
+from .models import Usuarios, Contrasenas, Autos, Fotos
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Autos
 from django.contrib.auth.models import AbstractUser
+from django.forms import formset_factory
+import os
 # Create your views here.
 
 def pruebas(request):
@@ -14,8 +15,40 @@ def pruebas(request):
 def index(request):
     return render(request,'index.html')
 
+
 def addauto(request):
-    return render(request, 'add-car.html')
+    if request.method == 'POST':
+        autos_form = AutosForm(request.POST)
+        fotos_form = FotosForm(request.POST, request.FILES)
+
+        if autos_form.is_valid() and fotos_form.is_valid():
+            auto = autos_form.save()
+
+            # Ruta al directorio donde se guardarán las fotos
+            directorio_fotos = 'img'  # Reemplaza con la ruta real
+
+            # Verifica si el directorio existe y créalo si no
+            if not os.path.exists(directorio_fotos):
+                os.makedirs(directorio_fotos)
+
+            # Iterar sobre cada foto que se sube en el campo images
+            for foto in request.FILES.getlist('images'):
+                fotos = Fotos(auto_id=auto)
+                fotos.path_foto.save(f'{directorio_fotos}id:{auto}_{foto.name}', foto)
+
+            # Repetir el mismo proceso para las fotos frontal y trasera
+            for field_name in ['frontal', 'trasera']:
+                foto = request.FILES.get(field_name)
+                if foto:
+                    fotos = Fotos(auto_id=auto)
+                    fotos.path_foto.save(f'360img_id:{auto}_{foto.name}', foto)
+
+
+            return redirect('index') #hacer que se conecte con detailcar
+    else:
+        autos_form = AutosForm()
+        fotos_form = FotosForm()
+    return render(request, 'add-car.html', {'autos_form': autos_form, 'fotos_form': fotos_form})
 
 def detalles_auto(request, auto_id):
     auto = Autos.objects.get(pk=auto_id)
@@ -31,14 +64,23 @@ def Login2(request):
             # Verificar si el email y la contraseña coinciden en las tablas Usuarios y Contraseñas
             try:
                 usuario = Usuarios.objects.get(email=email)
-                contrasena = Contraseñas.objects.get(usuario_id=usuario.id, contra=password)
+                contrasena = Contrasenas.objects.get(usuario_id=usuario.id, contra=password)
 
                 # Si la consulta tiene éxito, los datos son correctos
                 # Puedes realizar otras acciones, como iniciar sesión, redireccionar, etc.
-                login(request, usuario)
-                return redirect('index')
+                #login(request, usuario)
+                user = authenticate(request, email=email, password=password)
+                if user is not None:
+                # Login the user
+                    login(request, user)
+                    print("bienvenido")
+                    print(user.administrador)
+                    return redirect('index')
+                #print(usuario.administrador)
+                #print(login(request, usuario))
+               # return redirect('index')
 
-            except (Usuarios.DoesNotExist, Contraseñas.DoesNotExist):
+            except (Usuarios.DoesNotExist, Contrasenas.DoesNotExist):
                 # Si no se encuentra el usuario o la contraseña no coincide, puedes mostrar un mensaje de error
                 form.add_error(None, "Email o contraseña incorrectos")
 
@@ -71,7 +113,7 @@ def signup(request):
         # Si el usuario no existe, procedemos a crearlo
         usuario = Usuarios.objects.create(nombre=request.POST['nombre'],edad=request.POST['edad'],sexo=request.POST['sexo'],email=request.POST['email'], username = request.POST['nombre'])
 
-        contra = Contraseñas.objects.create(contra=request.POST['contrasena'],usuario_id=usuario)
+        contra = Contrasenas.objects.create(contra=request.POST['contrasena'],usuario_id=usuario)
 
         usuario.save()
         contra.save()

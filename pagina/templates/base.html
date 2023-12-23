@@ -42,8 +42,9 @@
 
         <!-- Right Nav -->
         <ul class="nav-menu-right">
-            {% if user.is_authenticated %}
-                {% if IsAdmin %}
+            <!-- Add this in your template for debugging -->
+            {% if request.user.is_authenticated %}
+                {% if request.user.administrador %}
                 <li>
                     <div class="mt-2">
                         <a href="{% url 'addcar' %}" class="btn btn-primary btn-lg">Agregar auto</a>
@@ -52,27 +53,24 @@
                 {% else %}
                 <li>
                     <div class="mt-2">
-                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Hola</a>
                     </div>
                 </li>
                 {% endif %}
             {% else %}
-            <li>
-            <div class="mt-2">
-                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
-            </div>
-            </li>
-            <li>
-            <div class="mt-2">
-                <a href="{% url 'signup' %}" class="btn btn-secondary btn-lg">Crear Cuenta</a>
-            </div>
-            </li>
+                <li>
+                <div class="mt-2">
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+                </div>
+                </li>
+                <li>
+                <div class="mt-2">
+                    <a href="{% url 'signup' %}" class="btn btn-secondary btn-lg">Crear Cuenta</a>
+                </div>
+                </li>
             {% endif %}
-            <!--<li>
-            <a href="#">
-                <i class="fas fa-search"></i>
-            </a>
-            </li>-->
+        
+
         </ul>
         </nav>
         <hr>

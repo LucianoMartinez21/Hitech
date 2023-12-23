@@ -54,7 +54,7 @@ class Autos(models.Model):
     auto_delete = models.DateTimeField(null=True)
 
 class Fotos(models.Model):
-    path_foto = models.FilePathField()
+    path_foto = models.ImageField(upload_to='')
     auto_id= models.ForeignKey(Autos, on_delete=models.DO_NOTHING)
 
 class Usuarios (AbstractUser):
@@ -68,15 +68,11 @@ class Usuarios (AbstractUser):
     sexo = models.IntegerField(choices=opciones_sexo)
     email = models.EmailField(max_length=255, unique=True)
     administrador= models.BooleanField(default=False)
-    usuario_delete = models.DateTimeField(null=True)
-
-    def IsAdmin(self):
-        return self.administrador
-    
+    usuario_delete = models.DateTimeField(null=True)    
     groups = models.ManyToManyField(Group, related_name='usuarios')
     user_permissions = models.ManyToManyField(Permission, related_name='usuarios')
 
-class Contraseñas(models.Model):
+class Contrasenas(models.Model):
     contra= models.CharField(max_length=600)
     contra_delete= models.DateTimeField(null=True)
     usuario_id= models.ForeignKey(Usuarios, on_delete=models.CASCADE)

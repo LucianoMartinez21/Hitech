@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-k656u&fyanlhabztr@v0pws@edyny$p!)bj-6*z@inoox&kbdj
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # Set the session cookie age (in seconds)
+AUTH_USER_MODEL = 'pagina.Usuarios'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 
@@ -85,6 +90,19 @@ DATABASES = {
     }
 }
 
+# settings.py
+AUTHENTICATION_BACKENDS = [
+    'pagina.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Include this line
+    'django.contrib.messages.middleware.MessageMiddleware',  # Include this line
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
