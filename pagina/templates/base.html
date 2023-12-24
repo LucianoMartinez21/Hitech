@@ -55,10 +55,19 @@
                 {% else %}
                 <li>
                     <div class="mt-2">
-                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Hola</a>
+                        <p>Hola {{ request.user.nombre }}</p>
                     </div>
                 </li>
+                
                 {% endif %}
+                <li>
+                    <div class="mt-2">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <p><button type="submit" class="btn btn-danger btn-lg">Log Out</button></p>
+                        </form>
+                    </div>
+                </li>
             {% else %}
                 <li>
                 <div class="mt-2">
@@ -109,6 +118,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/static/js/main.js"></script>
+    <script>
+        function logout() {
+            document.getElementById('logout-form').submit();
+        }
+    </script>
+
 </body>
 
 </html>
