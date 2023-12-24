@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto
+from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto, modificar_auto
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -26,7 +26,8 @@ urlpatterns = [
     path('signup/', signup,name='signup'),
     path('prueba/', pruebas, name='prueba'),
     path('auto/<int:auto_id>/', detalles_auto, name='detail'),
-    path('addcar/', addauto, name='addcar')
+    path('addcar/', addauto, name='addcar'),
+    path('modcar/<int:auto_id>/', modificar_auto, name='modcar')
 ]
 
 

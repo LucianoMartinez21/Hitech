@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from .forms import Login_Form, Signup_form, Contrasena_form, AutosForm, FotosForm
+from .forms import Login_Form, Signup_form, Contrasena_form, AutosForm, FotosForm, UpdateAutoForm
 from .models import Usuarios, Contrasenas, Autos, Fotos
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import AbstractUser
@@ -63,6 +63,17 @@ def addauto(request):
         autos_form = AutosForm()
         fotos_form = FotosForm()
     return render(request, 'add-car.html', {'autos_form': autos_form, 'fotos_form': fotos_form})
+
+def modificar_auto(request, auto_id):
+    auto = get_object_or_404(Autos, pk = auto_id)
+    if request.method == 'POST':
+        form = UpdateAutoForm(request.POST, instance = auto)
+        if form.is_valid():
+            form.save()
+            return redirect('detail', auto_id = auto.pk)
+    else:
+        form = UpdateAutoForm(instance=auto)
+    return render(request, 'mod-car.html', {'form': form, 'auto': auto})
 
 def detalles_auto(request, auto_id):
     auto = get_object_or_404(Autos, pk=auto_id)

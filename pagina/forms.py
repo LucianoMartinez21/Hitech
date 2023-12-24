@@ -250,3 +250,11 @@ class FotosForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Indicar que el campo auto_id no es requerido
         self.fields['auto_id'].required = False
+
+
+
+
+class UpdateAutoForm(forms.ModelForm):
+    class Meta:
+        model = Autos
+        fields = ['marca', 'modelo', 'ano', 'precio', 'tipo_gasolina', 'motor', 'transmision', 'color', 'cambio_volante', 'tipo_auto', 'numero_asientos', 'descripcion']

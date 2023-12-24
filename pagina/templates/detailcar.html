@@ -54,7 +54,7 @@
             <!-- Información general del auto -->
             <div class="card-body">
                 {% if request.user.administrador %}
-                    <a href="{% url 'modcar' %}" class="btn btn-primary btn-lg">Modificar autos</a>
+                    <a href="{% url 'modcar' auto.pk %}" class="btn btn-primary btn-lg">Modificar autos</a>
                 {% endif %}
                 <h3 class="card-title">{{auto.marca}} {{ auto.modelo }}</h5>
                 <p class="card-text">{{ auto.descripcion }}</p>
