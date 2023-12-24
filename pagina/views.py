@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import Login_Form, Signup_form, Contrasena_form, AutosForm, FotosForm
@@ -13,8 +13,28 @@ def pruebas(request):
     return render(request,'pruebas.html')
 
 def index(request):
-    return render(request,'index.html')
+    autos_list = Autos.objects.all()
+    # Fetch all images for each auto
+    autos_with_images = []
+    for auto in autos_list:
+        images = Fotos.objects.filter(auto_id=auto)
+        #if images:
+        #    print(images.first().path_foto.url)
+        #else:
+        #    print("No images found for auto:", auto.id)
+        autos_with_images.append({'auto': auto, 'images': images})
+    paginator = Paginator(autos_list, 2)  # Set the number of autos per page
 
+
+    page = request.GET.get('page')
+    try:
+        autos = paginator.page(page)
+    except PageNotAnInteger:
+        autos = paginator.page(1)
+    except EmptyPage:
+        autos = paginator.page(paginator.num_pages)
+
+    return render(request, 'index.html', {'autos': autos})
 
 def addauto(request):
     if request.method == 'POST':
@@ -51,7 +71,7 @@ def addauto(request):
     return render(request, 'add-car.html', {'autos_form': autos_form, 'fotos_form': fotos_form})
 
 def detalles_auto(request, auto_id):
-    auto = Autos.objects.get(pk=auto_id)
+    auto = get_object_or_404(Autos, pk=auto_id)
     return render(request, 'detailcar.html', {'auto' : auto})
 
 def Login2(request):
@@ -122,18 +142,3 @@ def signup(request):
 
 def pruebas(request):
     return render(request, 'add-car.html')
-'''
-def car_list(request):
-    cars_list = Autos.objects.all()
-    page = request.GET.get('page', 1)
-    paginator = Paginator(cars_list, 10) #Muestra 10 autos por pagina
-
-    try:
-        cars = paginator.page(page)
-    except PageNotAnInteger:
-        cars = paginator.page(1) # si la pagina no es un entero, entrega la primera pagina
-    except EmptyPage:
-        cars = paginator.page(paginator.num_pages)
-
-    return render(request, 'index.html', {'cars': cars})
-'''

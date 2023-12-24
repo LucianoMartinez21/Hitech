@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+
 <!-- Slider -->
 <div class="container-slider mt-0 slider-background">
     <!-- Auto Showcase -->
@@ -46,44 +47,49 @@
           <li class="list-group-item bg-black">Camiones</li>
         </ul>
       </div>
-
+      
       <!-- Sección de Autos -->
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4 mb-4">
-            <a href="./detailcar.html">
-              <div class="card bg-black">
-                <img src="/static/img/auto1.jpg" class="card-img-top" alt="Auto 1">
-                <div class="card-body">
-                  <h5 class="card-title">Modelo A</h5>
-                  <p class="card-text">Descripción del Modelo A.</p>
-                </div>
+          {% for auto_with_images in autos %}
+              <div class="col-md-4 mb-4">
+                <a href="{% url 'detail' auto_with_images.pk %}">
+                      <div class="card bg-black">
+                          {% if auto_with_images.first %}
+                              <img src="{{ auto_with_images.first.path_foto.url }}" class="card-img-top" alt="{{ auto_with_images.marca }} {{ auto_with_images.modelo }}">
+                          {% else %}
+                              <!-- Use the full path to the default image -->
+                              <img src="./pagina/static/img/logo2.png" class="card-img-top" alt="No Photo">
+                          {% endif %}
+                          <div class="card-body">
+                              <h5 class="card-title">{{ auto_with_images.marca }} {{ auto_with_images.modelo }}</h5>
+                              <p class="card-text">{{ auto_with_images.descripcion }}</p>
+                          </div>
+                      </div>
+                </a>
               </div>
-            </a>
-          </div>
-          <div class="col-md-4 mb-4">
-            <div class="card bg-black">
-              <img src="/static/img/auto2.jpg" class="card-img-top" alt="Auto 2">
-              <div class="card-body">
-                <h5 class="card-title">Modelo B</h5>
-                <p class="card-text">Descripción del Modelo B.</p>
-              </div>
-            </div>
-          </div>
-          <!-- Agrega más autos según sea necesario-->
+          {% endfor %}
+        </div>
+      
+      
+        <div class="pagination">
+          <span class="step-links">
+              {% if autos.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ autos.previous_page_number }}">previous</a>
+              {% endif %}
+        
+              <span class="current">
+                  Page {{ autos.number }} of {{ autos.paginator.num_pages }}.
+              </span>
+        
+              {% if autos.has_next %}
+                  <a href="?page={{ autos.next_page_number }}">next</a>
+                  <a href="?page={{ autos.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
         </div>
       </div>
-      {% for car in cars %}
-      <div class="col-md-4 mb-4">
-        <a href="{%url 'car_detail' car.id %}">
-          <div class="card bg-black">
-            <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.model }}">
-            <p class="card-title">{{car.modelo}}</h5>
-          </div>
-        </a>
-      </div>
-      {% endfor %}
-    </div>
   </div>
 </div>
 {% endblock %}
