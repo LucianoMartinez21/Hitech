@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
@@ -27,3 +28,7 @@ urlpatterns = [
     path('auto/<int:auto_id>/', detalles_auto, name='detail'),
     path('addcar/', addauto, name='addcar')
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

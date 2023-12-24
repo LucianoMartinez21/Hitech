@@ -30,8 +30,13 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # Set the session cookie age (in seconds)
 AUTH_USER_MODEL = 'pagina.Usuarios'
 
+# Configuración para archivos estáticos
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Application definition
 

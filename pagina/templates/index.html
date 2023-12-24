@@ -39,12 +39,12 @@
       <div class="col-md-3">
         <h4>Filtrar por Categoría</h4>
         <ul class="list-group">
-          <li class="list-group-item bg-black">Sedanes</li>
-          <li class="list-group-item bg-black">SUVs</li>
-          <li class="list-group-item bg-black">Deportivos</li>
-          <li class="list-group-item bg-black">Híbridos</li>
-          <li class="list-group-item bg-black">Eléctricos</li>
-          <li class="list-group-item bg-black">Camiones</li>
+          <li class="list-group-item ">Sedanes</li>
+          <li class="list-group-item ">SUVs</li>
+          <li class="list-group-item ">Deportivos</li>
+          <li class="list-group-item ">Híbridos</li>
+          <li class="list-group-item ">Eléctricos</li>
+          <li class="list-group-item ">Camiones</li>
         </ul>
       </div>
       
@@ -53,25 +53,22 @@
         <div class="row">
           {% for auto_with_images in autos %}
               <div class="col-md-4 mb-4">
-                <a href="{% url 'detail' auto_with_images.pk %}">
-                      <div class="card bg-black">
-                          {% if auto_with_images.first %}
-                              <img src="{{ auto_with_images.first.path_foto.url }}" class="card-img-top" alt="{{ auto_with_images.marca }} {{ auto_with_images.modelo }}">
+                <a href="{% url 'detail' auto_with_images.auto.pk %}">
+                      <div class="card">
+                          {% if auto_with_images.images %}
+                              <img src="{{ auto_with_images.images.first.path_foto.url }}" class="card-img-top" alt="{{ auto_with_images.marca }} {{ auto_with_images.modelo }}">
                           {% else %}
-                              <!-- Use the full path to the default image -->
-                              <img src="./pagina/static/img/logo2.png" class="card-img-top" alt="No Photo">
+                              <img src="./static/img/logo2.png" class="card-img-top" alt="No Photo">
                           {% endif %}
                           <div class="card-body">
-                              <h5 class="card-title">{{ auto_with_images.marca }} {{ auto_with_images.modelo }}</h5>
-                              <p class="card-text">{{ auto_with_images.descripcion }}</p>
+                              <h5 class="card-title">{{ auto_with_images.auto.marca }} {{ auto_with_images.auto.modelo }}</h5>
+                              <p class="card-text"><span id="precio">{{ auto_with_images.auto.precio }}</span></p>
                           </div>
                       </div>
                 </a>
               </div>
           {% endfor %}
         </div>
-      
-      
         <div class="pagination">
           <span class="step-links">
               {% if autos.has_previous %}
@@ -92,4 +89,22 @@
       </div>
   </div>
 </div>
+
+<script>
+  "{% for auto_with_images in autos %}";
+    // Supongamos que auto.precio es una cadena que representa un número, conviértelo a número    
+    var precio = parseFloat("{{auto_with_images.auto.precio}}");
+    // Verificar si la conversión fue exitosa antes de formatear
+    if (!isNaN(precio)) {
+      // Formatear el número como dinero en pesos chilenos utilizando toLocaleString
+      var precioFormateado = precio.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+
+      // Colocar el precio formateado en el elemento span con id "precio"
+      document.getElementById("precio").innerText = precioFormateado;
+    } else {
+      // Manejar el caso en el que la conversión no fue exitosa
+      console.error("El valor de auto.precio no es un número válido.");
+    }
+  "{% endfor %}";
+</script>
 {% endblock %}

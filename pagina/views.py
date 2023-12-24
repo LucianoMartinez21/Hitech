@@ -18,13 +18,8 @@ def index(request):
     autos_with_images = []
     for auto in autos_list:
         images = Fotos.objects.filter(auto_id=auto)
-        #if images:
-        #    print(images.first().path_foto.url)
-        #else:
-        #    print("No images found for auto:", auto.id)
         autos_with_images.append({'auto': auto, 'images': images})
-    paginator = Paginator(autos_list, 2)  # Set the number of autos per page
-
+    paginator = Paginator(autos_with_images, 2)  # Set the number of autos per page
 
     page = request.GET.get('page')
     try:
@@ -33,7 +28,6 @@ def index(request):
         autos = paginator.page(1)
     except EmptyPage:
         autos = paginator.page(paginator.num_pages)
-
     return render(request, 'index.html', {'autos': autos})
 
 def addauto(request):
@@ -72,7 +66,14 @@ def addauto(request):
 
 def detalles_auto(request, auto_id):
     auto = get_object_or_404(Autos, pk=auto_id)
-    return render(request, 'detailcar.html', {'auto' : auto})
+    images = Fotos.objects.filter(auto_id=auto.pk).exclude(path_foto__startswith='360img_id')
+    images360 = Fotos.objects.filter(auto_id=auto.pk, path_foto__startswith='360img_id')
+    context = {
+        'auto': auto,
+        'images': images,
+        'images_360': images360,
+    }
+    return render(request, 'detailcar.html', context)
 
 def Login2(request):
     if request.method == 'POST':
