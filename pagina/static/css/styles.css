@@ -539,3 +539,25 @@ img {
   width: 100%; /* O cualquier otro valor que desees */
   height: 500px; /* O cualquier otro valor que desees */
 }
+
+.color-1 {
+  background-color: red; /* O el color que corresponda a 'Rojo' en tus opciones */
+}
+
+.color-2 {
+  background-color: blue; /* O el color que corresponda a 'Azul' en tus opciones */
+}
+.color-3 {
+  background-color: green; /* O el color que corresponda a 'Rojo' en tus opciones */
+}
+
+.color-4 {
+  background-color: pink; /* O el color que corresponda a 'Azul' en tus opciones */
+}
+.color-5 {
+  background-color: white; /* O el color que corresponda a 'Rojo' en tus opciones */
+}
+
+.color-6 {
+  background-color: black; /* O el color que corresponda a 'Azul' en tus opciones */
+}

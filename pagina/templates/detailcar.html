@@ -78,14 +78,83 @@
             </div>
             <!-- Información general del auto -->
             <div class="card-body">
-                <h5 class="card-title">{{ auto.modelo }}</h5>
+                <h3 class="card-title">{{auto.marca}} {{ auto.modelo }}</h5>
                 <p class="card-text">{{ auto.descripcion }}</p>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Otro dato del auto</li>
+                    <li class="list-group-item">Año: {{auto.ano}}</li>
+                    <li class="list-group-item">Precio: <span id="precio">{{auto.precio}}</span></li>
+                    <li class="list-group-item">Combustible: {{ auto.get_tipo_gasolina_display }}</li>
+                    <li class="list-group-item">Motor: {{ auto.get_motor_display }}</li>
+                    <li class="list-group-item">Transmisión: 
+                        {% if auto.transmision %}
+                            Manual
+                        {% else %}
+                            Automático
+                        {% endif %}
+                    </li> <!--True = Manual-->
+                    <li class="list-group-item">Volante:
+                        {% if auto.cambio_volante %}
+                            Cambiado
+                        {% else %}
+                            Original
+                        {% endif %}
+                    </li> <!---Original|Cambiado-->
+                    <li class="list-group-item color-{{ auto.color }}">Color: {{ auto.get_color_display }}</li>
+                    <li class="list-group-item">Tipo: {{ auto.get_tipo_auto_display }}</li>
+                    <li class="list-group-item">Numero de asientos: {{ auto.numero_asientos }}</li>
                     <!-- Agrega más elementos de la lista según sea necesario -->
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+  // Supongamos que auto.precio es una cadena que representa un número, conviértelo a número
+  var precio = parseFloat("{{auto.precio}}");
+
+  // Verificar si la conversión fue exitosa antes de formatear
+  if (!isNaN(precio)) {
+    // Formatear el número como dinero en pesos chilenos utilizando toLocaleString
+    var precioFormateado = precio.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+
+    // Colocar el precio formateado en el elemento span con id "precio"
+    document.getElementById("precio").innerText = precioFormateado;
+  } else {
+    // Manejar el caso en el que la conversión no fue exitosa
+    console.error("El valor de auto.precio no es un número válido.");
+  }
+  /*
+   opciones_combusitble = (
+        ('1', '93'),
+        ('2', '95'),
+        ('3', '97'),
+        ('4', 'Petrolero'),
+    )
+  opciones_motor = (
+        ('1', 'Tipo V'),
+        ('2', 'Tipo W'),
+        ('3', 'Cilindro opuesto'),
+        ('4', 'Electrico'),
+    )
+  opciones_color = (
+        ('1', 'Rojo'),
+        ('2', 'Azul'),
+        ('3', 'Verde'),
+        ('4', 'Rosa'),
+        ('5', 'Blanco'),
+        ('6', 'Negro'),
+    )
+  opciones_auto = (
+        ('1', 'Sedan'),
+        ('2', 'SUV'),
+        ('3', 'Deportivo'),
+        ('4', 'Hibrido'),
+        ('5', 'Electrico'),
+        ('6', 'Camion'),
+    )*/
+</script>
+
+
 {% endblock %}
