@@ -7,6 +7,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import AbstractUser
 from django.forms import formset_factory
 import os
+from django.http import JsonResponse
+from django.contrib.auth.decorators import user_passes_test
+
 # Create your views here.
 
 def pruebas(request):
@@ -152,5 +155,43 @@ def signup(request):
         #login(request, usuario)
         return redirect('index')
 
+def es_admin(user):
+    return user.is_authenticated and user.administrador
+
+@user_passes_test(es_admin, login_url='index')
+def modificar_admin(request):
+    usuarios = Usuarios.objects.all()
+    administrador_actual = Usuarios.objects.first().administrador  # O el valor que prefieras
+    return render(request, 'modificar_admin.html', {'usuarios': usuarios})
+
+
+def update_admin(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_select')
+        admin_checkbox = request.POST.get('admin_checkbox')
+        
+        usuario = Usuarios.objects.get(id=user_id)
+        usuario.administrador = admin_checkbox is not None
+        usuario.save()
+
+    return redirect('pruebas')
+
+def get_admin_status(request, user_id):
+    usuario = Usuarios.objects.get(id=user_id)
+    data = {'administrador': usuario.administrador}
+    return JsonResponse(data)
+
+def get_user_details(request, user_id):
+    usuario = Usuarios.objects.get(id=user_id)
+    data = {
+        'nombre': usuario.nombre,
+        'edad': usuario.edad,
+        'sexo': usuario.get_sexo_display(),  # Obtiene el valor desplegable en lugar del código
+        'email': usuario.email,
+        'administrador': usuario.administrador,
+    }
+    return JsonResponse(data)
+
 def pruebas(request):
-    return render(request, 'add-car.html')
+    return redirect("index")
+

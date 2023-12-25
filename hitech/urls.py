@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto, modificar_auto
+from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto, modificar_auto, update_admin,get_admin_status, get_user_details, modificar_admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -25,11 +25,15 @@ urlpatterns = [
     path('', index, name='index'),
     path('login/', Login2, name='login'),
     path('signup/', signup,name='signup'),
-    path('prueba/', pruebas, name='prueba'),
+    path('prueba/', pruebas, name='pruebas'),
+    path('modificar_admin/', modificar_admin, name='modificar_admin'),
     path('auto/<int:auto_id>/', detalles_auto, name='detail'),
     path('addcar/', addauto, name='addcar'),
     path('modcar/<int:auto_id>/', modificar_auto, name='modcar'),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
+    path('update_admin/', update_admin, name='update_admin'),
+    path('get_admin_status/<int:user_id>/', get_admin_status, name='get_admin_status'),
+    path('get_user_details/<int:user_id>/', get_user_details, name='get_user_details'),
 ]
 
 

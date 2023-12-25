@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Volcando datos para la tabla django.auth_permission: ~52 rows (aproximadamente)
 INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
@@ -195,7 +195,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 	(4, 'auth', 'user'),
 	(5, 'contenttypes', 'contenttype'),
 	(12, 'pagina', 'autos'),
-	(10, 'pagina', 'contraseñas'),
+	(10, 'pagina', 'contrasenas'),
 	(8, 'pagina', 'fotos'),
 	(11, 'pagina', 'notificaciones'),
 	(13, 'pagina', 'registros_visitas'),
@@ -210,9 +210,9 @@ CREATE TABLE IF NOT EXISTS `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla django.django_migrations: ~25 rows (aproximadamente)
+-- Volcando datos para la tabla django.django_migrations: ~28 rows (aproximadamente)
 INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(1, 'contenttypes', '0001_initial', '2023-11-21 23:43:02.807690'),
 	(2, 'auth', '0001_initial', '2023-11-21 23:43:03.101793'),
@@ -238,7 +238,10 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(22, 'pagina', '0004_alter_autos_color_alter_autos_motor_and_more', '2023-12-13 23:40:45.316580'),
 	(23, 'pagina', '0005_alter_autos_id', '2023-12-20 14:25:36.252855'),
 	(24, 'pagina', '0006_alter_autos_id', '2023-12-20 14:25:36.809990'),
-	(25, 'pagina', '0007_alter_usuarios_options_alter_usuarios_managers_and_more', '2023-12-20 15:02:48.074185');
+	(25, 'pagina', '0007_alter_usuarios_options_alter_usuarios_managers_and_more', '2023-12-20 15:02:48.074185'),
+	(26, 'pagina', '0008_rename_contraseñas_contrasenas', '2023-12-23 12:41:22.268335'),
+	(27, 'pagina', '0009_alter_fotos_path_foto', '2023-12-23 18:14:59.369223'),
+	(28, 'pagina', '0010_alter_fotos_path_foto', '2023-12-23 21:58:50.288992');
 
 -- Volcando estructura para tabla django.django_session
 CREATE TABLE IF NOT EXISTS `django_session` (
@@ -249,13 +252,14 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla django.django_session: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla django.django_session: ~6 rows (aproximadamente)
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 	('a6iwbs8ikidka5mdzezzzbzsykrj0ovo', 'e30:1rFxbs:gg9jJi0aeTcx4FU4FmSjiExfwtr-sBm-l6m4CsivH0U', '2024-01-03 14:31:44.562569'),
 	('by5iie70el64vbqxyukcmhx0odp6dwnj', '.eJxVjEEOwiAQAP_C2RDbwgIevfsGsstupWogKe3J-HdD0oNeZybzVhH3Lce9yRoXVhc1gjr9QsL0lNINP7Dcq061bOtCuif6sE3fKsvrerR_g4wt9-_kWQwMNkFw5GcUY5jwHKwxVhJPY5iMtUIOCGiAMXhgJyAJHJLM6vMFBJQ4VQ:1rFy7X:wxiZLYiHp0BRGTySSlzTvBHmju-joBZvBmDXYI5ssRQ', '2024-01-03 15:04:27.574329'),
 	('f5nqg6u1kwvr3amzffiytgp08qkgr7me', 'e30:1rDZP2:Tn6QI5RNYMoTtJWLjyCSjhdfQerB3vqVt3L72d-w9_o', '2023-12-28 00:16:36.566273'),
 	('n92qyc8lc86gfjk7spaq5gykmwb4ctvb', '.eJxVjEEOgjAQRe_StWmETqetS_ecoZnpDIIaSCisjHdXEha6_e-9_zKZtnXIW9Ulj2IuxoE5_Y5M5aHTTuRO0222ZZ7WZWS7K_ag1Xaz6PN6uH8HA9XhW7cuigI2vmAKHHtSAGE6Jw_gtYhrkwPvlQMycoNtiihBUQsGYu3N-wMD_DhU:1rFyI7:IgP_-suLBob59pD-k1h8oGhtNYDgErGzIQtBn-LJO28', '2024-01-03 15:15:23.215565'),
-	('pkrdvgm0wgrkardk5cqgkpee954ruelg', 'e30:1rDZVG:iXX-IyDLMRzJdimrUL0sti2k01nM3E1G43j6g_7Frn0', '2023-12-28 00:23:02.065179');
+	('pkrdvgm0wgrkardk5cqgkpee954ruelg', 'e30:1rDZVG:iXX-IyDLMRzJdimrUL0sti2k01nM3E1G43j6g_7Frn0', '2023-12-28 00:23:02.065179'),
+	('tbx07rsvb8pqbxl0x5n8z1nxsqrd2kv4', '.eJxVjEEKwjAQAP-SsxSb7G4Sj4LvCLvJ1gS1SGNP4t-l0INeZ5h5m8Trq6a165JaMSdjyRx-oXC-6byZJ1_bzMMO-nB5cLufd_3XVO51W7lQFGjETNFLmFgBivAxIgBqLs5GB4gqnoRkJBsDFa-kmTyLTubzBdiSM0o:1rHrNx:mhSGYJTNBCIPHGD87CrawQSKcrVl1GFeviKJYemRmm8', '2024-01-08 20:17:13.591947');
 
 -- Volcando estructura para tabla django.pagina_autos
 CREATE TABLE IF NOT EXISTS `pagina_autos` (
@@ -274,12 +278,14 @@ CREATE TABLE IF NOT EXISTS `pagina_autos` (
   `descripcion` longtext,
   `auto_delete` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla django.pagina_autos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla django.pagina_autos: ~1 rows (aproximadamente)
+INSERT INTO `pagina_autos` (`id`, `marca`, `modelo`, `ano`, `precio`, `tipo_gasolina`, `motor`, `transmision`, `color`, `cambio_volante`, `tipo_auto`, `numero_asientos`, `descripcion`, `auto_delete`) VALUES
+	(22, 'Mazda', 'Demio', 2015, 10000000, '1', '1', 0, '6', 1, '1', 4, 'Este es un auto bastante impresionante y que hace muchas cosas como manejar y eso.', NULL);
 
--- Volcando estructura para tabla django.pagina_contraseñas
-CREATE TABLE IF NOT EXISTS `pagina_contraseñas` (
+-- Volcando estructura para tabla django.pagina_contrasenas
+CREATE TABLE IF NOT EXISTS `pagina_contrasenas` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `contra` varchar(600) NOT NULL,
   `contra_delete` datetime(6) DEFAULT NULL,
@@ -287,13 +293,15 @@ CREATE TABLE IF NOT EXISTS `pagina_contraseñas` (
   PRIMARY KEY (`id`),
   KEY `pagina_contraseñas_usuario_id_id_b09d67f1_fk_pagina_usuarios_id` (`usuario_id_id`),
   CONSTRAINT `pagina_contraseñas_usuario_id_id_b09d67f1_fk_pagina_usuarios_id` FOREIGN KEY (`usuario_id_id`) REFERENCES `pagina_usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla django.pagina_contraseñas: ~3 rows (aproximadamente)
-INSERT INTO `pagina_contraseñas` (`id`, `contra`, `contra_delete`, `usuario_id_id`) VALUES
+-- Volcando datos para la tabla django.pagina_contrasenas: ~5 rows (aproximadamente)
+INSERT INTO `pagina_contrasenas` (`id`, `contra`, `contra_delete`, `usuario_id_id`) VALUES
 	(5, '1010', NULL, 26),
 	(6, '2220', NULL, 33),
-	(7, '22202', NULL, 34);
+	(7, '22202', NULL, 34),
+	(8, '12345', NULL, 35),
+	(9, '1234', NULL, 36);
 
 -- Volcando estructura para tabla django.pagina_fotos
 CREATE TABLE IF NOT EXISTS `pagina_fotos` (
@@ -303,9 +311,23 @@ CREATE TABLE IF NOT EXISTS `pagina_fotos` (
   PRIMARY KEY (`id`),
   KEY `pagina_fotos_auto_id_id_cc42bc8b_fk` (`auto_id_id`),
   CONSTRAINT `pagina_fotos_auto_id_id_cc42bc8b_fk` FOREIGN KEY (`auto_id_id`) REFERENCES `pagina_autos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla django.pagina_fotos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla django.pagina_fotos: ~13 rows (aproximadamente)
+INSERT INTO `pagina_fotos` (`id`, `path_foto`, `auto_id_id`) VALUES
+	(105, 'imgidAutos_object_22_8lr3DDMOz4H-jQ6JRYqCELJyqy6Hi4XOVR0_5hB08Fg_plaintext_638356945758709743.jpg', 22),
+	(106, 'imgidAutos_object_22_adiFY3tDpstJbFmuqrhfMVD8ndaaje3DDqhWbgmHnAI_plaintext_638356945776713043.jpg', 22),
+	(107, 'imgidAutos_object_22_at8IQXPl78RuI1mAwscJUKwDbBphYds2frQ2BixcRcY_plaintext_638356945771510098.jpg', 22),
+	(108, 'imgidAutos_object_22_BAzfAhUFfdu-eyfsDyXlA4WVdHfpCcJkKshzuVfrnSg_plaintext_638356945765669746.jpg', 22),
+	(109, 'imgidAutos_object_22_bXhqfWcmY2e376JB2IPCRdNTm3Rx-lV0ikEEtzIt9S0_plaintext_638356945772669755.jpg', 22),
+	(110, 'imgidAutos_object_22_d8lF_D231mBNr2J3-k_bq5wXZVZ6Tr_yDUnxG99Q8WU_plaintext_638356945761149762.jpg', 22),
+	(111, 'imgidAutos_object_22_ID6N3rllkWKs2HSwhewUcpHCkbtGAWpuGl5j0KUSZds_plaintext_638356945764159760.jpg', 22),
+	(112, 'imgidAutos_object_22_lN-SQ15Etb8lCieWWZS_2jejISKutOFptM-LLPewW1I_plaintext_638356945769359741.jpg', 22),
+	(113, 'imgidAutos_object_22_N_IvK2fsjRNyZl3ZoaPlUwMJCQLZW26SmQg-ogW1-Ww_plaintext_638356945869707474.jpg', 22),
+	(114, 'imgidAutos_object_22_P_tSghJoXNwAADgOTT2VhAf7uAAhxKODF5sOFx8nOw8_plaintext_638356945752899753.jpg', 22),
+	(115, 'imgidAutos_object_22_rjtoifNJIaLI5ncQ1EvPZzIgHoPdGmqA18EAvPHLt4A_plaintext_638356945755839770.jpg', 22),
+	(116, '360img_idAutos_object_22_auto1_360_1.png', 22),
+	(117, '360img_idAutos_object_22_auto1_360_2.png', 22);
 
 -- Volcando estructura para tabla django.pagina_notificaciones
 CREATE TABLE IF NOT EXISTS `pagina_notificaciones` (
@@ -373,13 +395,15 @@ CREATE TABLE IF NOT EXISTS `pagina_usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `pagina_usuarios_email_d0200b6b_uniq` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla django.pagina_usuarios: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla django.pagina_usuarios: ~5 rows (aproximadamente)
 INSERT INTO `pagina_usuarios` (`id`, `nombre`, `edad`, `sexo`, `email`, `administrador`, `usuario_delete`, `date_joined`, `first_name`, `is_active`, `is_staff`, `is_superuser`, `last_login`, `last_name`, `password`, `username`) VALUES
-	(26, 'Marcos', 2, 3, 'marcoschallapa@gmail.com', 0, NULL, '2023-12-20 15:04:27.552106', '', 1, 0, 0, '2023-12-20 15:04:27.568322', '', '', ''),
+	(26, 'Marcos', 2, 3, 'marcoschallapa@gmail.com', 1, NULL, '2023-12-20 15:04:27.552106', '', 1, 0, 0, '2023-12-25 20:17:13.589923', '', '', ''),
 	(33, 'marco2', 2, 1, 'marcos@gmail.com', 0, NULL, '2023-12-20 15:14:49.557616', '', 1, 0, 0, '2023-12-20 15:14:49.573661', '', '', 'marco2'),
-	(34, 'marco3', 2, 1, 'marcoss@gmail.com', 0, NULL, '2023-12-20 15:15:23.187834', '', 1, 0, 0, '2023-12-20 15:15:23.207960', '', '', 'marco3');
+	(34, 'marco3', 2, 1, 'marcoss@gmail.com', 1, NULL, '2023-12-20 15:15:23.187834', '', 1, 0, 0, '2023-12-20 15:15:23.207960', '', '', 'marco3'),
+	(35, 'Luciano', 22, 1, 'luciano@email.com', 1, NULL, '2023-12-23 12:20:14.961450', '', 1, 1, 1, '2023-12-24 21:53:21.282590', '', '', 'Luciano'),
+	(36, 'a', 24, 2, 'abc@email.com', 0, NULL, '2023-12-24 21:54:16.719691', '', 1, 0, 0, '2023-12-24 21:54:28.881171', '', '', 'a');
 
 -- Volcando estructura para tabla django.pagina_usuarios_groups
 CREATE TABLE IF NOT EXISTS `pagina_usuarios_groups` (

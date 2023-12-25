@@ -51,11 +51,20 @@
                     <div class="mt-2">
                         <a href="{% url 'addcar' %}" class="btn btn-primary btn-lg">Agregar auto</a>
                     </div>
+                    <div class="mt-2">
+                        <a href="{% url 'modificar_admin' %}" class="btn btn-primary btn-lg">Admin</a>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{% url 'modificar_admin' %}" class="btn btn-primary btn-lg">Notificacion</a>
+                    </div>
                 </li>
                 {% else %}
                 <li>
                     <div class="mt-2">
                         <p>Hola {{ request.user.nombre }}</p>
+                    </div>
+                    <div class="mt-2">
+                        <a href="{% url 'modificar_admin' %}" class="btn btn-primary btn-lg">Notificacion</a>
                     </div>
                 </li>
                 
