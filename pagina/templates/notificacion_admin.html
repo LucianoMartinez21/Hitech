@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="body-login">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Notificaciones de Autos</h1>
+                    </div>
+                    <div class="card-body">
+                        {% for auto in autos_con_notificaciones %}
+                        <div class="mb-3 d-flex">
+                            <div>
+                                <h5>{{ auto.marca }} {{ auto.modelo }}</h5>
+                            </div>
+                            <div class="ml-auto">
+                                <a href="{% url 'notificar_auto' auto.pk %}" class="btn btn-primary">Notificar</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

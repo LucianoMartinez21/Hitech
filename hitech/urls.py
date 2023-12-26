@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto, modificar_auto, update_admin,get_admin_status, get_user_details, modificar_admin
+from pagina.views import index, Login2, detalles_auto, pruebas, signup, addauto, modificar_auto, update_admin,get_admin_status, get_user_details, modificar_admin,notificar_auto, notificacion_admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -34,6 +34,8 @@ urlpatterns = [
     path('update_admin/', update_admin, name='update_admin'),
     path('get_admin_status/<int:user_id>/', get_admin_status, name='get_admin_status'),
     path('get_user_details/<int:user_id>/', get_user_details, name='get_user_details'),
+    path('notificar_auto/<int:auto_id>/', notificar_auto, name='notificar_auto'),
+    path('notificaciones_admin/', notificacion_admin, name='notificacion_admin'),
 ]
 
 

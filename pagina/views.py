@@ -2,15 +2,22 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import Login_Form, Signup_form, Contrasena_form, AutosForm, FotosForm, UpdateAutoForm
-from .models import Usuarios, Contrasenas, Autos, Fotos
+from .models import Usuarios, Contrasenas, Autos, Fotos, Notificaciones
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import AbstractUser
 from django.forms import formset_factory
 import os
 from django.http import JsonResponse
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
+from django.db.models import Count
 
 # Create your views here.
+
+def es_admin(user):
+    return user.is_authenticated and user.administrador
 
 def pruebas(request):
     return render(request,'pruebas.html')
@@ -33,6 +40,7 @@ def index(request):
         autos = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'autos': autos})
 
+@user_passes_test(es_admin, login_url='index')
 def addauto(request):
     if request.method == 'POST':
         autos_form = AutosForm(request.POST)
@@ -67,6 +75,7 @@ def addauto(request):
         fotos_form = FotosForm()
     return render(request, 'add-car.html', {'autos_form': autos_form, 'fotos_form': fotos_form})
 
+@user_passes_test(es_admin, login_url='index')
 def modificar_auto(request, auto_id):
     auto = get_object_or_404(Autos, pk = auto_id)
     if request.method == 'POST':
@@ -77,6 +86,7 @@ def modificar_auto(request, auto_id):
     else:
         form = UpdateAutoForm(instance=auto)
     return render(request, 'mod-car.html', {'form': form, 'auto': auto})
+
 
 def detalles_auto(request, auto_id):
     auto = get_object_or_404(Autos, pk=auto_id)
@@ -155,8 +165,6 @@ def signup(request):
         #login(request, usuario)
         return redirect('index')
 
-def es_admin(user):
-    return user.is_authenticated and user.administrador
 
 @user_passes_test(es_admin, login_url='index')
 def modificar_admin(request):
@@ -191,6 +199,47 @@ def get_user_details(request, user_id):
         'administrador': usuario.administrador,
     }
     return JsonResponse(data)
+
+def notificar_auto(request, auto_id):
+    if request.user.is_authenticated:
+        auto = get_object_or_404(Autos, pk=auto_id)
+
+        # Verifica si el usuario ya tiene una notificación para este auto
+        existe_notificacion = Notificaciones.objects.filter(
+            usuario_notificacion_id=request.user,
+            auto_notificacion_id=auto
+        ).exists()
+
+        if not existe_notificacion:
+            # Crea una nueva notificación con fecha de inicio actual y fecha final un día después
+            fecha_inicio = timezone.now()
+            fecha_final = fecha_inicio + timedelta(days=1)
+            
+            Notificaciones.objects.create(
+                usuario_notificacion_id=request.user,
+                auto_notificacion_id=auto,
+                fecha_inicio=fecha_inicio,
+                fecha_final=fecha_final
+            )
+            messages.success(request, f'¡Te notificaremos cuando haya novedades sobre el auto {auto.modelo}!')
+        else:
+            messages.warning(request, f'Ya estás notificado sobre el auto {auto.modelo}.')
+
+    else:
+        messages.error(request, 'Debes iniciar sesión para notificar sobre un auto.')
+
+    return redirect('detail', auto_id=auto_id)
+
+
+def notificacion_admin(request):
+    # Obtén la lista de autos con al menos una notificación
+    autos_con_notificaciones = Autos.objects.annotate(num_notificaciones=Count('notificaciones')).filter(num_notificaciones__gt=0)
+
+    context = {
+        'autos_con_notificaciones': autos_con_notificaciones,
+    }
+
+    return render(request, 'notificacion_admin.html', context)
 
 def pruebas(request):
     return redirect("index")

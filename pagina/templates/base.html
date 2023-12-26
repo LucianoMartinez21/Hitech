@@ -48,14 +48,20 @@
             {% if request.user.is_authenticated %}
                 {% if request.user.administrador %}
                 <li>
+                    
                     <div class="mt-2">
                         <a href="{% url 'addcar' %}" class="btn btn-primary btn-lg">Agregar auto</a>
                     </div>
+
+                </li>
+                <li>
                     <div class="mt-2">
                         <a href="{% url 'modificar_admin' %}" class="btn btn-primary btn-lg">Admin</a>
                     </div>
+                </li>
+                <li>
                     <div class="mt-2">
-                        <a href="{% url 'modificar_admin' %}" class="btn btn-primary btn-lg">Notificacion</a>
+                        <a href="{% url 'notificacion_admin' %}" class="btn btn-primary btn-lg">Notificacion</a>
                     </div>
                 </li>
                 {% else %}
