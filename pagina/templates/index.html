@@ -62,7 +62,7 @@
                           {% endif %}
                           <div class="card-body">
                               <h5 class="card-title">{{ auto_with_images.auto.marca }} {{ auto_with_images.auto.modelo }}</h5>
-                              <p class="card-text"><span id="precio">{{ auto_with_images.auto.precio }}</span></p>
+                              <p class="card-text"><span class="precio-a-formatear">{{ auto_with_images.auto.precio }}</span></p>
                           </div>
                       </div>
                 </a>
@@ -91,20 +91,29 @@
 </div>
 
 <script>
-  "{% for auto_with_images in autos %}";
-    // Supongamos que auto.precio es una cadena que representa un número, conviértelo a número    
-    var precio = parseFloat("{{auto_with_images.auto.precio}}");
-    // Verificar si la conversión fue exitosa antes de formatear
-    if (!isNaN(precio)) {
-      // Formatear el número como dinero en pesos chilenos utilizando toLocaleString
-      var precioFormateado = precio.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+  function formatearYAsignarPrecios() {
+    // Seleccionar todos los elementos con la clase 'precio-a-formatear'
+    var elementosPrecio = document.querySelectorAll('.precio-a-formatear');
 
-      // Colocar el precio formateado en el elemento span con id "precio"
-      document.getElementById("precio").innerText = precioFormateado;
-    } else {
-      // Manejar el caso en el que la conversión no fue exitosa
-      console.error("El valor de auto.precio no es un número válido.");
-    }
-  "{% endfor %}";
+    elementosPrecio.forEach(function(elemento) {
+      // Supongamos que auto.precio es una cadena que representa un número, conviértelo a número    
+      var precio = parseFloat(elemento.innerText);
+
+      // Verificar si la conversión fue exitosa antes de formatear
+      if (!isNaN(precio)) {
+        // Formatear el número como dinero en pesos chilenos utilizando toLocaleString
+        var precioFormateado = precio.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
+
+        // Colocar el precio formateado en el elemento
+        elemento.innerText = precioFormateado;
+      } else {
+        // Manejar el caso en el que la conversión no fue exitosa
+        console.error("El valor no es un número válido.");
+      }
+    });
+  }
+
+  // Llamada a la función al cargar la página o cuando sea necesario
+  document.addEventListener("DOMContentLoaded", formatearYAsignarPrecios);
 </script>
 {% endblock %}
