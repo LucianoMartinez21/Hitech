@@ -292,6 +292,18 @@ def notificacion_usuario(request):
 def sobre_nosotros(request):
     return render(request, 'sobre_nosotros.html')
 
+def eliminar_autos(request):
+    autos = Autos.objects.all()
+
+    if request.method == 'POST':
+        auto_id = request.POST.get('auto_id')
+        if auto_id:
+            auto = get_object_or_404(Autos, pk=auto_id)
+            auto.delete()
+
+    context = {'autos': autos}
+    return render(request, 'eliminar_autos.html', context)
+
 def pruebas(request):
     return redirect("index")
 

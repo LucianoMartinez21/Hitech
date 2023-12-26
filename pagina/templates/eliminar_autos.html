@@ -1,0 +1,31 @@
+{% block content %}
+
+<div class="body-login">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Eliminar Autos
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for auto in autos %}
+                                <li>
+                                    {{ auto.marca }} {{ auto.modelo }}
+                                    <form method="post" action="{% url 'eliminar_autos' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="auto_id" value="{{ auto.id }}">
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
