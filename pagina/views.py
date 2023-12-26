@@ -22,9 +22,24 @@ def es_admin(user):
 def pruebas(request):
     return render(request,'pruebas.html')
 
+opciones_auto = (
+    ('1', 'Sedan'),
+    ('2', 'SUV'),
+    ('3', 'Deportivo'),
+    ('4', 'Hibrido'),
+    ('5', 'Electrico'),
+    ('6', 'Camion'),
+)
+
 def index(request):
     autos_list = Autos.objects.all()
     # Fetch all images for each auto
+    categorias = dict(opciones_auto)
+
+    categoria_filtrada = request.GET.get('categoria')
+    if categoria_filtrada:
+        autos_list = autos_list.filter(tipo_auto=categoria_filtrada)
+
     autos_with_images = []
     for auto in autos_list:
         images = Fotos.objects.filter(auto_id=auto)
@@ -38,7 +53,7 @@ def index(request):
         autos = paginator.page(1)
     except EmptyPage:
         autos = paginator.page(paginator.num_pages)
-    return render(request, 'index.html', {'autos': autos})
+    return render(request, 'index.html', {'autos': autos, 'categorias': categorias, 'categoria_filtrada': categoria_filtrada})
 
 @user_passes_test(es_admin, login_url='index')
 def addauto(request):

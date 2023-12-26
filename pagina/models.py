@@ -1,6 +1,40 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
+opciones_sexo = (
+    (1, 'Masculino'),
+    (2, 'Femenino'),
+    (3, 'Otro'),
+)
+opciones_combusitble = (
+    ('1', '93'),
+    ('2', '95'),
+    ('3', '97'),
+    ('4', 'Petrolero'),
+)
+opciones_motor = (
+    ('1', 'Tipo V'),
+    ('2', 'Tipo W'),
+    ('3', 'Cilindro opuesto'),
+    ('4', 'Electrico'),
+)
+opciones_color = (
+    ('1', 'Rojo'),
+    ('2', 'Azul'),
+    ('3', 'Verde'),
+    ('4', 'Rosa'),
+    ('5', 'Blanco'),
+    ('6', 'Negro'),
+)
+opciones_auto = (
+    ('1', 'Sedan'),
+    ('2', 'SUV'),
+    ('3', 'Deportivo'),
+    ('4', 'Hibrido'),
+    ('5', 'Electrico'),
+    ('6', 'Camion'),
+)
+
 # Create your models here.
 class Tabla_test(models.Model):
     columna_uno = models.CharField(max_length=200)
@@ -14,40 +48,16 @@ class Autos(models.Model):
     modelo = models.CharField(max_length=20)
     ano = models.IntegerField()
     precio = models.IntegerField()
-    opciones_combusitble = (
-        ('1', '93'),
-        ('2', '95'),
-        ('3', '97'),
-        ('4', 'Petrolero'),
-    )
+
     tipo_gasolina = models.CharField(max_length=1, choices=opciones_combusitble,  null=True)
-    opciones_motor = (
-        ('1', 'Tipo V'),
-        ('2', 'Tipo W'),
-        ('3', 'Cilindro opuesto'),
-        ('4', 'Electrico'),
-    )
+
     motor =models.CharField(max_length=1, choices=opciones_motor, null=True)
     transmision= models.BooleanField(null=True)
-    opciones_color = (
-        ('1', 'Rojo'),
-        ('2', 'Azul'),
-        ('3', 'Verde'),
-        ('4', 'Rosa'),
-        ('5', 'Blanco'),
-        ('6', 'Negro'),
-    )
+
     color = models.CharField(max_length=1, choices=opciones_color, null=True)
     cambio_volante = models.BooleanField(null=True)
 
-    opciones_auto = (
-        ('1', 'Sedan'),
-        ('2', 'SUV'),
-        ('3', 'Deportivo'),
-        ('4', 'Hibrido'),
-        ('5', 'Electrico'),
-        ('6', 'Camion'),
-    )
+
     tipo_auto = models.CharField(max_length=1, choices=opciones_auto, null=True)
     numero_asientos = models.IntegerField(null=True)
     descripcion = models.TextField(max_length=400, null=True)
@@ -60,11 +70,7 @@ class Fotos(models.Model):
 class Usuarios (AbstractUser):
     nombre = models.CharField(max_length=60)
     edad = models.IntegerField()
-    opciones_sexo = (
-        (1, 'Masculino'),
-        (2, 'Femenino'),
-        (3, 'Otro'),
-    )
+
     sexo = models.IntegerField(choices=opciones_sexo)
     email = models.EmailField(max_length=255, unique=True)
     administrador= models.BooleanField(default=False)

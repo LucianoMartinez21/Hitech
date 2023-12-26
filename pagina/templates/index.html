@@ -38,14 +38,12 @@
     <div class="row">
       <div class="col-md-3">
         <h4>Filtrar por Categoría</h4>
-        <ul class="list-group">
-          <li class="list-group-item ">Sedanes</li>
-          <li class="list-group-item ">SUVs</li>
-          <li class="list-group-item ">Deportivos</li>
-          <li class="list-group-item ">Híbridos</li>
-          <li class="list-group-item ">Eléctricos</li>
-          <li class="list-group-item ">Camiones</li>
-        </ul>
+        <form method="get" class="list-group">
+          {% for key, value in categorias.items %}
+            <button type="submit" name="categoria" value="{{ key }}" class="list-group-item {% if categoria_filtrada == key %}active{% endif %}">{{ value }}</button>
+          {% endfor %}
+          <button type="submit" name="categoria" value="" class="list-group-item {% if not categoria_filtrada %}active{% endif %}">Todas</button>
+        </form>        
       </div>
       
       <!-- Sección de Autos -->
@@ -115,5 +113,9 @@
 
   // Llamada a la función al cargar la página o cuando sea necesario
   document.addEventListener("DOMContentLoaded", formatearYAsignarPrecios);
+  function filterByCategoria(categoria) {
+    document.querySelector('input[name="categoria"]').value = categoria;
+    document.querySelector('form').submit();
+  }
 </script>
 {% endblock %}
