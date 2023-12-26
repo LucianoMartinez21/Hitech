@@ -245,7 +245,7 @@ def notificar_auto(request, auto_id):
 
     return redirect('detail', auto_id=auto_id)
 
-
+@user_passes_test(es_admin, login_url='index')
 def notificacion_admin(request):
     # Obtén la lista de autos con al menos una notificación
     autos_con_notificaciones = Autos.objects.annotate(num_notificaciones=Count('notificaciones')).filter(num_notificaciones__gt=0)
@@ -289,6 +289,8 @@ def notificacion_usuario(request):
 
     return render(request, 'notificacion_usuario.html', context)
 
+def sobre_nosotros(request):
+    return render(request, 'sobre_nosotros.html')
 
 def pruebas(request):
     return redirect("index")
