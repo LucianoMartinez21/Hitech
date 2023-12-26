@@ -8,17 +8,20 @@
                     <div class="card-header">
                         <h1>Notificaciones de Autos</h1>
                     </div>
-                    <div class="card-body">
+                    <form method="post" action="{% url 'notificacion_admin' %}">
+                        {% csrf_token %}
                         {% for auto in autos_con_notificaciones %}
-                        <div class="mb-3 d-flex">
-                            <div>
-                                <h5>{{ auto.marca }} {{ auto.modelo }}</h5>
+                            <div class="mb-3 d-flex">
+                                <div>
+                                    <h5>{{ auto.marca }} {{ auto.modelo }}</h5>
+                                </div>
+                                <div class="ml-auto">
+                                    <input type="hidden" name="auto_id" value="{{ auto.pk }}">
+                                    <button type="submit" class="btn btn-primary">Notificar</button>
+                                </div>
                             </div>
-                            <div class="ml-auto">
-                                <a href="{% url 'notificar_auto' auto.pk %}" class="btn btn-primary">Notificar</a>
-                            </div>
-                        </div>
                         {% endfor %}
+                    </form>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="body-login">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Notificaciones
+                    </div>
+                    <div class="card-body">
+                        {% if autos_notificados %}
+                            <ul>
+                                {% for auto in autos_notificados %}
+                                    <li class="mb-3 p-3 bg-light rounded border">
+                                        {{ auto.marca }} {{ auto.modelo }} - Año: {{ auto.ano }}
+                                        <!-- Otros detalles del auto según sea necesario -->
+                                        <form method="post" action="{% url 'notificacion_usuario' %}" style="display: inline;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="auto_id" value="{{ auto.id }}">
+                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                        <a href="{% url 'detail' auto_id=auto.id %}" class="btn btn-primary ml-2">Ir</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No tienes notificaciones de autos.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

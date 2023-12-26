@@ -13,6 +13,8 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Count
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -165,13 +167,11 @@ def signup(request):
         #login(request, usuario)
         return redirect('index')
 
-
 @user_passes_test(es_admin, login_url='index')
 def modificar_admin(request):
     usuarios = Usuarios.objects.all()
     administrador_actual = Usuarios.objects.first().administrador  # O el valor que prefieras
     return render(request, 'modificar_admin.html', {'usuarios': usuarios})
-
 
 def update_admin(request):
     if request.method == 'POST':
@@ -239,7 +239,41 @@ def notificacion_admin(request):
         'autos_con_notificaciones': autos_con_notificaciones,
     }
 
+    if request.method == 'POST':
+        auto_id = request.POST.get('auto_id')  # Obtén el ID del auto desde el formulario
+        auto = get_object_or_404(Autos, pk=auto_id)
+        
+        # Envia el correo electrónico a los usuarios vinculados al auto
+        enviar_correo_notificacion(auto)
+
+        messages.success(request, f'Correo electrónico de notificación enviado para el auto {auto.modelo}.')
+
     return render(request, 'notificacion_admin.html', context)
+
+def enviar_correo_notificacion(auto):
+    usuarios_auto = Usuarios.objects.filter(notificaciones__auto_notificacion_id=auto)
+    asunto = 'Notificación sobre un auto'
+    mensaje = f'Hola,\n\nSe ha actualizado información sobre el auto {auto.marca} {auto.modelo}. Visita el sitio para obtener más detalles.'
+
+    for usuario in usuarios_auto:
+        send_mail(asunto, mensaje, 'marcos_challapa@yahoo.com', [usuario.email])
+
+def notificacion_usuario(request):
+    if request.method == 'POST':
+        auto_id = request.POST.get('auto_id')
+        if auto_id:
+            Notificaciones.objects.filter(usuario_notificacion_id=request.user, auto_notificacion_id=auto_id).delete()
+            return redirect('notificacion_usuario')
+
+    notificaciones_usuario = Notificaciones.objects.filter(usuario_notificacion_id=request.user)
+    autos_notificados = [notificacion.auto_notificacion_id for notificacion in notificaciones_usuario]
+
+    context = {
+        'autos_notificados': autos_notificados,
+    }
+
+    return render(request, 'notificacion_usuario.html', context)
+
 
 def pruebas(request):
     return redirect("index")
