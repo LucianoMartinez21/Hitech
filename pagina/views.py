@@ -266,11 +266,17 @@ def notificacion_admin(request):
     return render(request, 'notificacion_admin.html', context)
 
 def enviar_correo_notificacion(auto):
+    print(auto)
+    usuarios_auto = Usuarios.objects.all()
+    print (usuarios_auto)
     usuarios_auto = Usuarios.objects.filter(notificaciones__auto_notificacion_id=auto)
+    print (usuarios_auto)
+
     asunto = 'Notificación sobre un auto'
     mensaje = f'Hola,\n\nSe ha actualizado información sobre el auto {auto.marca} {auto.modelo}. Visita el sitio para obtener más detalles.'
 
     for usuario in usuarios_auto:
+        print (usuario)
         send_mail(asunto, mensaje, 'marcos_challapa@yahoo.com', [usuario.email])
 
 def notificacion_usuario(request):

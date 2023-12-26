@@ -11,18 +11,21 @@
                     <form method="post" action="{% url 'notificacion_admin' %}">
                         {% csrf_token %}
                         {% for auto in autos_con_notificaciones %}
-                            <div class="mb-3 d-flex">
-                                <div>
-                                    <h5>{{ auto.marca }} {{ auto.modelo }}</h5>
-                                </div>
-                                <div class="ml-auto">
-                                    <input type="hidden" name="auto_id" value="{{ auto.pk }}">
-                                    <button type="submit" class="btn btn-primary">Notificar</button>
-                                </div>
-                            </div>
+                            <form method="post" action="{% url 'notificacion_admin' %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3 d-flex">
+                                        <div>
+                                            <h5>{{ auto.marca }} {{ auto.modelo }}</h5>
+                                        </div>
+                                        
+                                        <div class="ml-auto">
+                                            <input type="hidden" name="auto_id" value="{{ auto.pk }}">
+                                            <button type="submit" class="btn btn-primary">Notificar</button>
+                                        </div>
+                                    </div>                    
+                            </form>
                         {% endfor %}
                     </form>
-                    </div>
                 </div>
             </div>
         </div>

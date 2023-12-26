@@ -44,9 +44,9 @@ EMAIL_HOST = 'smtp.mail.yahoo.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # Intenta cambiar a EMAIL_USE_SSL en lugar de TLS
-# EMAIL_USE_SSL = True
+#EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'marcos_challapa@yahoo.com'
-EMAIL_HOST_PASSWORD = 'yfmmakpluoiyysjb'  # Reemplaza con la contraseña de tu cuenta de Yahoo
+EMAIL_HOST_PASSWORD = 'rmylidekqkacaeav'  # Reemplaza con la contraseña de tu cuenta de Yahoo
 
 # Application definition
 
